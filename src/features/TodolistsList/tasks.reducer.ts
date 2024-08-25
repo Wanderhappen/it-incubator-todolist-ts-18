@@ -78,14 +78,13 @@ export const tasksActions = slice.actions
 
 export const fetchTasksTC = createAsyncThunk(
   'tasks/fetch-task',
-  (todolistId: string, thunkAPI) => {
+  async (todolistId: string, thunkAPI) => {
     const { dispatch } = thunkAPI
     dispatch(appActions.setAppStatus({ status: 'loading' }))
-    todolistsAPI.getTasks(todolistId).then((res) => {
-      const tasks = res.data.items
-      dispatch(tasksActions.setTasks({ tasks, todolistId }))
-      dispatch(appActions.setAppStatus({ status: 'succeeded' }))
-    })
+    const res = await todolistsAPI.getTasks(todolistId)
+    const tasks = res.data.items
+    dispatch(tasksActions.setTasks({ tasks, todolistId }))
+    dispatch(appActions.setAppStatus({ status: 'succeeded' }))
   }
 )
 // thunks
