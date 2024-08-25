@@ -1,7 +1,8 @@
-import { Dispatch } from 'redux'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { authAPI } from 'api/todolists-api'
 import { authActions } from 'features/auth/auth.reducer'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { fetchTasksTC } from 'features/TodolistsList/tasks.reducer'
+import { Dispatch } from 'redux'
 
 const initialState = {
   status: 'idle' as RequestStatusType,
@@ -19,12 +20,26 @@ const slice = createSlice({
     setAppError: (state, action: PayloadAction<{ error: string | null }>) => {
       state.error = action.payload.error
     },
-    setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+    setAppStatus: (
+      state,
+      action: PayloadAction<{ status: RequestStatusType }>
+    ) => {
       state.status = action.payload.status
     },
-    setAppInitialized: (state, action: PayloadAction<{ isInitialized: boolean }>) => {
+    setAppInitialized: (
+      state,
+      action: PayloadAction<{ isInitialized: boolean }>
+    ) => {
       state.isInitialized = action.payload.isInitialized
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchTasksTC.pending, (state, action) => {
+      state.status = 'loading'
+    })
+    builder.addCase(fetchTasksTC.fulfilled, (state, action) => {
+      state.status = 'succeeded'
+    })
   },
 })
 
