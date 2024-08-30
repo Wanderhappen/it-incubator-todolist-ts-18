@@ -206,7 +206,7 @@ test('empty arrays should be added when we set todolists', () => {
 })
 
 test('tasks should be added for todolist', () => {
-  const action = fetchTasksTC.fulfilled(
+  const _action = fetchTasksTC.fulfilled(
     {
       tasks: startState['todolistId1'],
       todolistId: 'todolistId1',
@@ -214,6 +214,21 @@ test('tasks should be added for todolist', () => {
     '123',
     '123'
   )
+
+  type TestThunkAction<
+    T extends (...args: any) => any,
+    P extends string,
+  > = Omit<ReturnType<T>, P>
+
+  type Action = TestThunkAction<typeof fetchTasksTC.fulfilled, 'meta'>
+
+  const action: Action = {
+    type: fetchTasksTC.fulfilled.type,
+    payload: {
+      tasks: startState['todolistId1'],
+      todolistId: 'todolistId1',
+    },
+  }
 
   const endState = tasksReducer(
     {
