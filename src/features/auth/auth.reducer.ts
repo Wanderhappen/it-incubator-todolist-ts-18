@@ -3,10 +3,7 @@ import { authAPI, LoginParamsType } from 'api/todolists-api'
 import { appActions } from 'app/app.reducer'
 import { AppThunk } from 'app/store'
 import { clearTasksAndTodolists } from 'common/actions/common.actions'
-import {
-  handleServerAppError,
-  handleServerNetworkError,
-} from 'utils/error-utils'
+import { handleServerAppError, handleServerNetworkError } from 'utils/error-utils'
 
 const slice = createSlice({
   name: 'auth',

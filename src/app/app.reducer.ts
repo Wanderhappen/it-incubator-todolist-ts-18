@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { authAPI } from 'api/todolists-api'
 import { authActions } from 'features/auth/auth.reducer'
-import { fetchTasksTC } from 'features/TodolistsList/tasks.reducer'
+import {
+  addTaskTC,
+  fetchTasksTC,
+  updateTaskTC,
+} from 'features/TodolistsList/tasks.reducer'
 import { Dispatch } from 'redux'
 
 const initialState = {
@@ -34,12 +38,25 @@ const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchTasksTC.pending, (state, action) => {
-      state.status = 'loading'
-    })
-    builder.addCase(fetchTasksTC.fulfilled, (state, action) => {
-      state.status = 'succeeded'
-    })
+    builder
+      .addCase(fetchTasksTC.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchTasksTC.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+      })
+      .addCase(addTaskTC.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(addTaskTC.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+      })
+      .addCase(updateTaskTC.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(updateTaskTC.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+      })
   },
 })
 

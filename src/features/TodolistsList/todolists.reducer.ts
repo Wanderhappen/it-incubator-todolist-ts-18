@@ -1,9 +1,9 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { todolistsAPI, TodolistType } from 'api/todolists-api'
 import { appActions, RequestStatusType } from 'app/app.reducer'
-import { handleServerNetworkError } from 'utils/error-utils'
 import { AppThunk } from 'app/store'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { clearTasksAndTodolists } from 'common/actions/common.actions'
+import { handleServerNetworkError } from 'utils/error-utils'
 
 const initialState: TodolistDomainType[] = []
 
@@ -17,7 +17,11 @@ const slice = createSlice({
       // return state.filter(tl => tl.id !== action.payload.id)
     },
     addTodolist: (state, action: PayloadAction<{ todolist: TodolistType }>) => {
-      const newTodolist: TodolistDomainType = { ...action.payload.todolist, filter: 'all', entityStatus: 'idle' }
+      const newTodolist: TodolistDomainType = {
+        ...action.payload.todolist,
+        filter: 'all',
+        entityStatus: 'idle',
+      }
       state.unshift(newTodolist)
     },
     changeTodolistTitle: (state, action: PayloadAction<{ id: string; title: string }>) => {
@@ -39,7 +43,11 @@ const slice = createSlice({
       }
     },
     setTodolists: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
-      return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }))
+      return action.payload.todolists.map((tl) => ({
+        ...tl,
+        filter: 'all',
+        entityStatus: 'idle',
+      }))
       // return action.payload.forEach(t => ({...t, filter: 'active', entityStatus: 'idle'}))
     },
   },
@@ -73,7 +81,12 @@ export const removeTodolistTC = (id: string): AppThunk => {
     //изменим глобальный статус приложения, чтобы вверху полоса побежала
     dispatch(appActions.setAppStatus({ status: 'loading' }))
     //изменим статус конкретного тудулиста, чтобы он мог задизеблить что надо
-    dispatch(todolistsActions.changeTodolistEntityStatus({ id, entityStatus: 'loading' }))
+    dispatch(
+      todolistsActions.changeTodolistEntityStatus({
+        id,
+        entityStatus: 'loading',
+      })
+    )
     todolistsAPI.deleteTodolist(id).then((res) => {
       dispatch(todolistsActions.removeTodolist({ id }))
       //скажем глобально приложению, что асинхронная операция завершена
