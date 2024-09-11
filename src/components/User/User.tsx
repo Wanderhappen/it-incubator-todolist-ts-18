@@ -1,5 +1,9 @@
 import React from 'react'
 
 export const User = () => {
-  return <div>User1</div>
+  return (
+    <div>
+      <div>User1</div>
+    </div>
+  )
 }
