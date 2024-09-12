@@ -5,6 +5,7 @@ export const User = () => {
     <div>
       <div>User1</div>
       <div>Login commit 1</div>
+      <div>Login commit 2</div>
     </div>
   )
 }
