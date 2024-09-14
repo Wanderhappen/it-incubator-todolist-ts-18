@@ -10,6 +10,7 @@ export const User = () => {
       <div>Login commit 2</div>
       <div>Dev commit 1</div>
       <div>Dev commit 2</div>
+      <div>Dev commit 3</div>
     </div>
   )
 }
